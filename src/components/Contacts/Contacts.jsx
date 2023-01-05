@@ -3,34 +3,36 @@ import { Contact } from './Contact';
 import PropTypes from 'prop-types';
 import { useGetContactsQuery } from 'redux/phonebookAPI';
 
-
-export const Contacts = ({filter}) => {
+export const Contacts = ({ filter }) => {
   const { data, error, isLoading } = useGetContactsQuery();
-  
+
   let visibleContacts = {};
   if (data) {
-    visibleContacts = data.filter(contact => 
-    contact.name.toLowerCase().includes(filter)
-  )
-  };
-  
+    visibleContacts = data.filter(contact =>
+      contact.name.toLowerCase().includes(filter)
+    );
+  }
 
-  return  <ul>
-    {data && visibleContacts.map(contact => {
-      return <Contact
-        name = {contact.name}
-        number = { contact.phone}
-        id = {contact.id}
-        key={contact.id}
-      ></Contact>
-    })}
-    
-    {error && <p>Sorry. Something is wrong... ${error}</p>}
+  return (
+    <ul>
+      {data &&
+        visibleContacts.map(contact => {
+          return (
+            <Contact
+              name={contact.name}
+              number={contact.number}
+              id={contact.id}
+              key={contact.id}
+            ></Contact>
+          );
+        })}
 
-    {isLoading&& <p>Loading...Please wait...</p>}
-  </ul>
-}
+      {error && <p>Sorry. Something is wrong... ${error}</p>}
+
+      {isLoading && <p>Loading...Please wait...</p>}
+    </ul>
+  );
+};
 Contacts.propTypes = {
-  visibleContacts: PropTypes.array,
-  handleDelete: PropTypes.func,
-}
+  filter: PropTypes.string,
+};
