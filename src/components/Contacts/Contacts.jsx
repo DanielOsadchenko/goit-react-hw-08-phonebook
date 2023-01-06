@@ -2,6 +2,7 @@ import React from 'react';
 import { Contact } from './Contact';
 import PropTypes from 'prop-types';
 import { useGetContactsQuery } from 'redux/phonebookAPI';
+import { List } from '@mui/material';
 
 export const Contacts = ({ filter }) => {
   const { data, error, isLoading } = useGetContactsQuery();
@@ -14,7 +15,7 @@ export const Contacts = ({ filter }) => {
   }
 
   return (
-    <ul>
+    <List sx={{ width: '100%', maxWidth: 600 }}>
       {data &&
         visibleContacts.map(contact => {
           return (
@@ -30,7 +31,7 @@ export const Contacts = ({ filter }) => {
       {error && <p>Sorry. Something is wrong... ${error}</p>}
 
       {isLoading && <p>Loading...Please wait...</p>}
-    </ul>
+    </List>
   );
 };
 Contacts.propTypes = {
